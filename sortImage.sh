@@ -11,9 +11,12 @@ IFS=$'\n\t'
 while IFS= read -r -d '' image
 do
 	if [ -f "$image" ]; then
-		image_dir=$(echo "$image" | cut -d'/' -f2 | cut -d'_' -f1)
+
+		image_name=$(basename "$image")
+		image_dir=$(echo "$image_name" | cut -d'_' -f1)
 		echo "moving $image -> sorted/$image_dir/"
 		mkdir -p "sorted/$image_dir"
 		cp "$image" "sorted/$image_dir"
 	fi
 done <   <(find images/ -type f -print0 -name "*.jpg" -o -name "*.png" )
+
